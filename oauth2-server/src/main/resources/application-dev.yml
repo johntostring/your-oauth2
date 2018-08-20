@@ -1,0 +1,53 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/qy_oauth2?verifyServerCertificate=false&useSSL=false&characterEncoding=UTF-8
+    username: root
+    password: 14yhl9t
+
+security:
+  oauth2:
+    authorization:
+      check-token-access: isAuthenticated()
+      token-key-access: permitAll()
+
+#  openssl genrsa -out privkey.pem 2048
+#  openssl rsa -pubout -in privkey.pem -out pubkey.pem
+your-oauth2:
+  privateKey: |
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIEpAIBAAKCAQEAxYfF/QQmA05SRrNXUpQ82tPnC4HrwBM28C/rChr5J/qaQi+j
+    wy/3RLMsaxIlr07GJSI0VkImsrGKWN8VUY3Vmb+pdUVF/hpnr2Bdxsl0AQ5vCUnA
+    YuD3Bzs3q5mXWWiL8UTxZbjiQpEoi3kuph6DyFsyiHbIASsrA6vsgOh/JGdnHEr9
+    Q5Mj1zSE7fDCzTzvLUnHqA6GCvU5QdSdzmj7WDBqdsGKoDRrvz1QtXGCsyrlerUl
+    PhuzG8KAx4OI6cemoOU2+g9if8dBIpiTuKQ9cubjjgwCikEUD4oRnk4jnNy5KQjt
+    5eFcudjEhmNnwJqLcUuwj2DRRN61ovsfCc3qhwIDAQABAoIBAQDDRp+Hq1M9D2+t
+    L1zTaXLjznrp2G3Mu/Ii7uxIWDQavtdDOT+HFeM4Sn1N+GnC7nhae38MC2egXn3r
+    r9augi45Sc3n/izcsRPxv63VeJCy/qbsormLxuTPhE5b2YJTRFScl1CiBG3B6ykP
+    ASUJ2r7jEq1ZVTwSU6+5eHxdT/tpawV7zrCd0784sPtBXpjQm4LTl3Aj0CRm5uCj
+    DwrtFcSN91fL0pCy/wqWuWTCCqXZ+nUya7MGQ5bCc7asumolP346AziLaz7lAI96
+    Bf6zngET3yg7ovZT9jyw0GGfWV7m1JvD/nCy16fW5sN4/AcB/PW0Uirotf5tohYU
+    DCgjFSppAoGBAPZs6RNPnLXqvPDgijsPAamoJAejeqliOo9LYKb1RRfnX4+zmyVa
+    dXPOY/j8qYClHKlN6IN9w9xwLYpEofrM4LVqxhIL2BrKW2/iXDWQOXL6s3Wf1Qb3
+    kFc3PeRxIZfIRiDYtxEen9ds+TEgZIuZ30P9HEOhXBELk/an+B4UZEpVAoGBAM00
+    hj6KRKcg84XFYIQCIRGgn6kENYEcjVo0yi5xPAAo4g80AVehYJsB6CJmwkNmGdbc
+    Sc6QI5EemBeDvfptS+RN9D0tU6Up3ylXs12qXkdDeFPeX5AE7YOJBMVhknLtuW5e
+    UoP95Ztq2nQT2qyR3/PFuXuLyjhLBfiV9+10QnVrAoGAEwekFCawvmerQZrFcfwd
+    r8FZTvGz9kKsrQYwJ5SHSmpGue0vzPmoWlIU7FRuro2Rog1vKEBdELfk/GmCbMDH
+    lZryQtCBVshLuV8sqcJCfXuYwjuektQpZGLSt8J4yqTfrYeu03ae917l+4I54YH3
+    eOOh/CMI3hQb0A92nLQMbqUCgYADU0SRot/17VzE4CvuN7KdfILZ1E2hp/rKaWyV
+    UBRu1DrFkEwtRVoxaNiAJjYjrXXhu3Qeuss4wMwqJWJguoCuVG0OyLtAQ+tv2hH4
+    BJi+guNiSIo35TyMEx5WrHwZDK0ikri3ltevqw2bL+8tOLfuVVfqHpvKSbzxCE0a
+    NfYVvQKBgQDoWxzfWrMyVn+41IvTMKQ13PJc2GEIKLLDXrwa+LxLNKfzLTc9fO7v
+    9XYr2cTQ3PjhgFsCVY/TRZqBQ4QnqQrxjsV1I5DxdNBkjAyyPRwwW8Gn3MZzkYeb
+    hvE3nq+c1GzG0a880DRLy0JccPDxVPTS6ThqLVGVLJl3Ld+kAvnKlw==
+    -----END RSA PRIVATE KEY-----
+  publicKey: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxYfF/QQmA05SRrNXUpQ8
+    2tPnC4HrwBM28C/rChr5J/qaQi+jwy/3RLMsaxIlr07GJSI0VkImsrGKWN8VUY3V
+    mb+pdUVF/hpnr2Bdxsl0AQ5vCUnAYuD3Bzs3q5mXWWiL8UTxZbjiQpEoi3kuph6D
+    yFsyiHbIASsrA6vsgOh/JGdnHEr9Q5Mj1zSE7fDCzTzvLUnHqA6GCvU5QdSdzmj7
+    WDBqdsGKoDRrvz1QtXGCsyrlerUlPhuzG8KAx4OI6cemoOU2+g9if8dBIpiTuKQ9
+    cubjjgwCikEUD4oRnk4jnNy5KQjt5eFcudjEhmNnwJqLcUuwj2DRRN61ovsfCc3q
+    hwIDAQAB
+    -----END PUBLIC KEY-----
