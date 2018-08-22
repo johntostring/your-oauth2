@@ -9,6 +9,9 @@ security:
     authorization:
       check-token-access: isAuthenticated()
       token-key-access: permitAll()
+    resource:
+      id: demo-oauth2
+
 
 #  openssl genrsa -out privkey.pem 2048
 #  openssl rsa -pubout -in privkey.pem -out pubkey.pem

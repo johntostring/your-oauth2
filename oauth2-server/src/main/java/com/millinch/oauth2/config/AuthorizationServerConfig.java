@@ -3,6 +3,7 @@ package com.millinch.oauth2.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -10,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -39,7 +39,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthorizationServerConfig.class);
 
-    private final AuthenticationManager authenticationManager;
+    @Autowired
+    @Qualifier("authenticationManagerBean")
+    private AuthenticationManager authenticationManager;
 
     private final AuthorizationServerProperties properties;
 
@@ -55,15 +57,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private ClientDetailsService clientDetailsService;
 
-    public AuthorizationServerConfig(AuthenticationManager authenticationManager,
-                                     AuthorizationServerProperties properties) throws Exception {
-        this.authenticationManager = authenticationManager;
-        this.properties = properties;
-    }
+    @Autowired
+    private YourUserDetailsManager userDetailsManager;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public AuthorizationServerConfig(AuthorizationServerProperties properties) throws Exception {
+        this.properties = properties;
     }
 
     @Bean
@@ -95,10 +96,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return defaultTokenServices;
     }
 
-    @Bean
-    public YourUserDetailsManager userDetailsManager() {
-        return new YourUserDetailsManager(dataSource);
-    }
 
     @Bean
     protected AuthorizationCodeServices authorizationCodeServices() {
@@ -117,22 +114,22 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         if (this.properties.getRealm() != null) {
             security.realm(this.properties.getRealm());
         }
-        security.passwordEncoder(passwordEncoder());
+        security.passwordEncoder(passwordEncoder);
     }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.jdbc(dataSource)
-                .passwordEncoder(passwordEncoder());
+                .passwordEncoder(passwordEncoder);
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.authorizationCodeServices(authorizationCodeServices())
                 .authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsManager())
-                .tokenStore(tokenStore())
+                .userDetailsService(userDetailsManager)
                 .tokenServices(tokenServices())
+                .tokenStore(tokenStore())
 //                .reuseRefreshTokens(true)
                 .accessTokenConverter(accessTokenConverter())
                 .approvalStoreDisabled();
