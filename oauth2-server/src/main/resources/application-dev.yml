@@ -11,6 +11,9 @@ security:
       token-key-access: permitAll()
     resource:
       id: demo-oauth2
+      jwt:
+        key-value: ${your-oauth2.publicKey}
+
 
 
 #  openssl genrsa -out privkey.pem 2048
@@ -54,3 +57,7 @@ your-oauth2:
     cubjjgwCikEUD4oRnk4jnNy5KQjt5eFcudjEhmNnwJqLcUuwj2DRRN61ovsfCc3q
     hwIDAQAB
     -----END PUBLIC KEY-----
+
+logging:
+  level:
+    org.springframework.security: debug

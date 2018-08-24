@@ -2,14 +2,13 @@ package com.millinch.oauth2.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.sql.DataSource;
 
@@ -18,8 +17,10 @@ import javax.sql.DataSource;
  *
  * @author John Zhang
  */
-@Configuration
-@EnableWebSecurity(debug = true)
+//@Configuration
+//@EnableWebSecurity(debug = true)
+@SessionAttributes("authorizationRequest")
+//@Order(-20)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -38,12 +39,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // @formatter:off
         http
             .formLogin().loginPage("/login").permitAll()
-            .and()
-            .requestMatchers().antMatchers("/login", "/oauth/authorize", "/oauth/confirm_access")
-            .and()
+        .and()
+            .requestMatchers().antMatchers("/login", "/logout", "/oauth/authorize", "/oauth/confirm_access")
+        .and()
             .authorizeRequests().anyRequest().authenticated();
+        // @formatter:on
     }
 
     @Override
