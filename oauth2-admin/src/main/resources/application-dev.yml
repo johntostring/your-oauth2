@@ -1,6 +1,31 @@
+spring:
+  aop:
+    proxy-target-class: true
+
+
 security:
+#  user:
+#    password: none
+#  ignored:
   oauth2:
+    client:
+      accessTokenUri: http://sso.example.org:9999/oauth/token
+      userAuthorizationUri: http://sso.example.org:9999/oauth/authorize
+      clientId: qy-client
+      clientSecret: 123456
     resource:
-      id: demo-oauth2
       jwt:
-        key-uri: http://localhost:9999/oauth/token_key
+        key-uri: http://sso.example.org:9999/oauth/token_key
+
+zuul:
+  routes:
+    resource:
+      path: /resource/**
+      url: http://localhost:9000
+    user:
+      path: /user/**
+      url: http://sso.example.org:9999/user-detail
+
+logging:
+  level:
+    org.springframework.security: DEBUG

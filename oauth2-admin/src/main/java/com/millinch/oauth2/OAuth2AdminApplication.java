@@ -2,18 +2,36 @@ package com.millinch.oauth2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 /**
  * This guy is busy, nothing left
  *
  * @author John Zhang
  */
-@EnableResourceServer
 @SpringBootApplication
-public class OAuth2AdminApplication {
+@EnableZuulProxy
+@EnableOAuth2Sso
+public class OAuth2AdminApplication extends WebSecurityConfigurerAdapter {
 
     public static void main(String[] args) {
         SpringApplication.run(OAuth2AdminApplication.class, args);
+    }
+
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        // @formatter:off
+        http
+                .logout().logoutSuccessUrl("/").and()
+                .authorizeRequests()
+                .antMatchers("/index.html", "/", "/login").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .csrf()
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+        // @formatter:on
     }
 }

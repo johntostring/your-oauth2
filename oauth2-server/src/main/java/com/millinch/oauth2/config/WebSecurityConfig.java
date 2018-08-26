@@ -2,6 +2,8 @@ package com.millinch.oauth2.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,10 +19,9 @@ import javax.sql.DataSource;
  *
  * @author John Zhang
  */
-//@Configuration
-//@EnableWebSecurity(debug = true)
+@Order(2)
+@Configuration
 @SessionAttributes("authorizationRequest")
-//@Order(-20)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -33,7 +34,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-//        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
         return new BCryptPasswordEncoder();
     }
 
