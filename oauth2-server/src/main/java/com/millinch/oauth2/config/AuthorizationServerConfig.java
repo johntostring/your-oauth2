@@ -62,6 +62,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+//
+//    @Bean
+//    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+//        return new JdbcTemplate(dataSource);
+//    }
 
     public AuthorizationServerConfig(AuthorizationServerProperties properties) throws Exception {
         this.properties = properties;

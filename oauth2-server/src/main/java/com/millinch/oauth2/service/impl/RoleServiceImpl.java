@@ -20,7 +20,6 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * This guy is busy, nothing left
@@ -48,8 +47,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Optional<Role> findOne(long id) {
-        return this.roleRepository.findById(id);
+    public Role findOne(long id) {
+        return this.roleRepository.findOne(id);
     }
 
     @Override
@@ -96,7 +95,7 @@ public class RoleServiceImpl implements RoleService {
         Role saveRole = null;
         if (addAuthorityList.size() > 0) {
             saveRole = this.saveRole(role);
-            this.roleAuthorityRepository.saveAll(addAuthorityList);
+            this.roleAuthorityRepository.save(addAuthorityList);
             LOGGER.info("角色{}增加{}个权限", role.getName(), addAuthorityList.size());
         } else {
             saveRole = this.saveRole(role);
@@ -124,12 +123,11 @@ public class RoleServiceImpl implements RoleService {
         if (role == null || role.getId() == null) {
             throw new ServiceException("角色不存在");
         }
-        Optional<Role> optionalRole = this.roleRepository.findById(role.getId());
-        if (!optionalRole.isPresent()) {
+        Role roleInDb = this.roleRepository.findOne(role.getId());
+        if (roleInDb == null) {
             throw new ServiceException("角色不存在");
         }
         boolean dirty = false;
-        Role roleInDb = optionalRole.get();
         if (StringUtils.hasText(role.getCode())
             && !role.getCode().equals(roleInDb.getCode())) {
             if (this.isUniqueCode(role.getCode())) {
@@ -166,7 +164,7 @@ public class RoleServiceImpl implements RoleService {
             List<RoleAuthority> addAuthorityList = instanceRoleAuthorities(role, addAuthIdList);
             if (addAuthorityList.size() > 0) {
                 LOGGER.info("角色:id={}增加{}个权限", role.getId(), addAuthorityList.size());
-                this.roleAuthorityRepository.saveAll(addAuthorityList);
+                this.roleAuthorityRepository.save(addAuthorityList);
             }
             int delRows = 0;
             if (delAuthIdList != null && delAuthIdList.size() > 0) {
@@ -185,12 +183,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public boolean deleteRole(long id) throws ServiceException {
-        Optional<Role> optionalRole = roleRepository.findById(id);
-        if (!optionalRole.isPresent()) {
+        Role role = roleRepository.findOne(id);
+        if (role == null) {
             throw new ServiceException("角色不存在");
         }
         try {
-            roleRepository.deleteById(id);
+            roleRepository.delete(id);
             return true;
         } catch (Exception e) {
             LOGGER.info("删除角色失败：id={}", id, e);
@@ -201,8 +199,8 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public boolean deleteRole(List<Long> idList) throws ServiceException {
         try {
-            List<Role> all = roleRepository.findAllById(idList);
-            roleRepository.deleteAll(all);
+            List<Role> all = roleRepository.findAll(idList);
+            roleRepository.delete(all);
             return true;
         } catch (Exception e) {
             throw new ServiceException("批量删除角色失败");

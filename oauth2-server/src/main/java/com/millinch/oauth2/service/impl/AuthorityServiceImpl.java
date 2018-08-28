@@ -37,8 +37,8 @@ public class AuthorityServiceImpl implements AuthorityService {
     }
 
     @Override
-    public Optional<Authority> findOne(long id) {
-        return authorityRepository.findById(id);
+    public Authority findOne(long id) {
+        return authorityRepository.findOne(id);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class AuthorityServiceImpl implements AuthorityService {
         if (authority == null || authority.getId() == null) {
             throw new ServiceException("权限不存在");
         }
-        Optional<Authority> optionalAuthority = authorityRepository.findById(authority.getId());
+        Optional<Authority> optionalAuthority = Optional.ofNullable(authorityRepository.findOne(authority.getId()));
         if (!optionalAuthority.isPresent()) {
             throw new ServiceException("权限不存在");
         }
@@ -106,12 +106,12 @@ public class AuthorityServiceImpl implements AuthorityService {
 
     @Override
     public boolean deleteAuthority(long id) throws ServiceException {
-        Optional<Authority> optionalAuthority = authorityRepository.findById(id);
+        Optional<Authority> optionalAuthority = Optional.ofNullable(authorityRepository.findOne(id));
         if (!optionalAuthority.isPresent()) {
             throw new ServiceException("权限不存在");
         }
         try {
-            authorityRepository.deleteById(id);
+            authorityRepository.delete(id);
             return true;
         } catch (Exception e) {
             LOGGER.error("删除 Authority 失败：id={}", id, e);
@@ -122,8 +122,8 @@ public class AuthorityServiceImpl implements AuthorityService {
     @Override
     public boolean deleteAuthority(List<Long> idList) {
         try {
-            List<Authority> all = authorityRepository.findAllById(idList);
-            authorityRepository.deleteAll(all);
+            List<Authority> all = authorityRepository.findAll(idList);
+            authorityRepository.delete(all);
             return true;
         } catch (Exception e) {
             LOGGER.info("批量删除 Authority 失败", e);

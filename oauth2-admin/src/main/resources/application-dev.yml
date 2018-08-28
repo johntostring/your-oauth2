@@ -1,0 +1,29 @@
+spring:
+  aop:
+    proxy-target-class: true
+
+oauth2-server-url: http://sso.example.org:9999/uaa
+
+security:
+  user:
+    password: none
+#    ignored:
+  oauth2:
+    client:
+      accessTokenUri: ${oauth2-server-url}/oauth/token
+      userAuthorizationUri: ${oauth2-server-url}/oauth/authorize
+      clientId: qy-client
+      clientSecret: 123456
+    resource:
+      jwt:
+        key-uri: ${oauth2-server-url}/oauth/token_key
+
+zuul:
+  routes:
+    uapi:
+      path: /uapi/**
+      url: ${oauth2-server-url}
+
+logging:
+  level:
+    org.springframework.security: DEBUG

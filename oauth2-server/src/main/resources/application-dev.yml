@@ -1,6 +1,7 @@
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/qy_oauth2?verifyServerCertificate=false&useSSL=false&characterEncoding=UTF-8
+    driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: 14yhl9t
 

@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
         try {
             List<UserRole> addUserRoleList = instanceUserRoles(userId, addRoleIdList);
             if (addUserRoleList.size() > 0) {
-                this.userRoleRepository.saveAll(addUserRoleList);
+                this.userRoleRepository.save(addUserRoleList);
                 LOGGER.info("用户:id={}增加{}个角色", userId, addUserRoleList.size());
             }
             int delRows;

@@ -11,6 +11,7 @@
 
     <modules>
         <module>oauth2-server</module>
+        <module>oauth2-admin</module>
     </modules>
 
     <properties>
@@ -19,11 +20,11 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>2.0.4.RELEASE</spring-boot.version>
-        <spring-cloud-dependencies.version>Finchley.SR1</spring-cloud-dependencies.version>
+        <spring-boot.version>1.5.15.RELEASE</spring-boot.version>
+        <spring-cloud-dependencies.version>Edgware.SR4</spring-cloud-dependencies.version>
         <docker.plugin.version>0.4.13</docker.plugin.version>
-        <spring-security-oauth2-autoconfigure.version>2.0.3.RELEASE</spring-security-oauth2-autoconfigure.version>
-        <spring-security-oauth2.version>2.3.3.RELEASE</spring-security-oauth2.version>
+        <!--<spring-security-oauth2-autoconfigure.version>2.0.3.RELEASE</spring-security-oauth2-autoconfigure.version>-->
+        <!--<spring-security-oauth2.version>2.3.3.RELEASE</spring-security-oauth2.version>-->
     </properties>
 
     <dependencyManagement>

@@ -29,7 +29,7 @@ public class YourUserDetailsManager extends JdbcUserDetailsManager {
                     "where u.username = ?";
 
     public YourUserDetailsManager(DataSource dataSource) {
-        super(dataSource);
+        this.setDataSource(dataSource);
         this.authoritiesByUsernameQuery = DEF_AUTHORITIES_BY_USERNAME_QUERY;
     }
 
