@@ -3,9 +3,10 @@ package com.millinch.oauth2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.boot.autoconfigure.security.reactive.PathRequest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.web.server.SecurityWebFilterChain;
 
 /**
  * This guy is busy, nothing left
@@ -13,15 +14,25 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
  * @author John Zhang
  */
 @SpringBootApplication
-@EnableZuulProxy
 @EnableOAuth2Sso
-public class OAuth2AdminApplication extends WebSecurityConfigurerAdapter {
+public class OAuth2AdminApplication /*extends WebSecurityConfigurerAdapter*/ {
 
     public static void main(String[] args) {
         SpringApplication.run(OAuth2AdminApplication.class, args);
     }
 
-    @Override
+    @Bean
+    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+        return http
+                .logout().and()
+                .authorizeExchange()
+                .matchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                .pathMatchers("/index.html", "/", "/login").permitAll()
+                .anyExchange().authenticated().and()
+                .csrf().and()
+                .build();
+    }
+    /*@Override
     public void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         http
@@ -33,5 +44,5 @@ public class OAuth2AdminApplication extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
         // @formatter:on
-    }
+    }*/
 }

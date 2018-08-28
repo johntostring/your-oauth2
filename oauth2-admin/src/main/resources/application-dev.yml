@@ -1,6 +1,13 @@
 spring:
   aop:
     proxy-target-class: true
+  cloud:
+    gateway:
+      routes:
+      - id: oauth2_server_route
+        uri: http://sso.example.org:9999
+        predicates:
+        - Path=/ssoapi/{segment}
 
 
 security:
