@@ -6,6 +6,7 @@
 <h3>OAuth2.0 Server</h3>
 <div class="container">
     <form role="form" action="/logout" method="post">
+        <input type="hidden" id="csrf_token" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <button type="submit" class="btn btn-primary">退出</button>
     </form>
 </div>
