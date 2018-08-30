@@ -1,8 +1,11 @@
+server:
+  context-path: /ums
+
 spring:
   aop:
     proxy-target-class: true
 
-oauth2-server-url: http://sso.example.org:9999/uaa
+oauth2-server-url: http://sso.example.org:9999
 
 security:
   user:

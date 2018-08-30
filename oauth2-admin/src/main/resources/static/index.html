@@ -8,6 +8,12 @@
     <ul>
         <li><a href="/ums/login">登录</a></li>
         <li><a target="_blank" href="/ums/uapi/user-detail">测试</a></li>
+        <li>
+            <form action="/ums/logout" method="post">
+                <input type="hidden" name="_csrf" value="1">
+                <button>退出</button>
+            </form>
+        </li>
     </ul>
 </body>
 </html>

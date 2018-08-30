@@ -40,7 +40,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers("/login").permitAll()
+                .antMatchers("/login", "/").permitAll()
                 .anyRequest().authenticated();
     }
 
