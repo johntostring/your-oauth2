@@ -31,7 +31,7 @@ public class OAuth2AdminApplication extends WebSecurityConfigurerAdapter {
         http
                 .logout().logoutSuccessUrl("/").and()
                 .authorizeRequests()
-                .antMatchers("/index.html", "/", "/login").permitAll()
+                .antMatchers("/", "/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf()
@@ -44,6 +44,7 @@ public class OAuth2AdminApplication extends WebSecurityConfigurerAdapter {
         @Override
         public void addViewControllers(ViewControllerRegistry registry) {
             registry.addViewController("/").setViewName("index");
+            registry.addViewController("/welcome").setViewName("welcome");
         }
     }
 }
