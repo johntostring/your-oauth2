@@ -6,6 +6,9 @@ spring:
     password: 14yhl9t
 
 security:
+  ignored:
+    - "/assets/**"
+    - "*.js"
   oauth2:
     authorization:
       check-token-access: isAuthenticated()
