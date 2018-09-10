@@ -41,7 +41,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/login", "/").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers("/oapi/**").authenticated();
     }
 
     @Override

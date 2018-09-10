@@ -1,13 +1,10 @@
 <html>
 <head>
+    <title>统一认证系统</title>
+    <link rel="shortcut icon" href="favicon.ico">
     <link type="text/css" href="/assets/css/login.css" rel="stylesheet">
 </head>
 <body>
-<#if RequestParameters['error']??>
-	<div class="alert alert-danger">
-        There was a problem logging in. Please try again.
-    </div>
-</#if>
 <div class="cont">
     <div class="demo">
         <div class="login">
@@ -30,6 +27,11 @@
                         <input type="password" class="login__input pass" placeholder="密码" name="password" value="123456"/>
                     </div>
                     <input type="hidden" id="csrf_token" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <#if RequestParameters['error']??>
+                    <div class="login-alert">
+                        ${SPRING_SECURITY_LAST_EXCEPTION.message}</p>
+                    </div>
+                    </#if>
                     <button type="button" class="login__submit">登&nbsp;&nbsp;录</button>
                 </form>
                 <p class="login__signup">还没有账号？ &nbsp;<a>注册</a></p>
@@ -50,27 +52,26 @@
 </div>
 <div class="container">
 </div>
-<script src="http://cdn.bootcss.com/jquery/1.12.1/jquery.min.js"></script>
+<script src="/assets/js/jquery-1.12.1.min.js"></script>
 <script type="text/javascript">
     $(function() {
-
         var animating = false,
-                submitPhase1 = 1100,
-                submitPhase2 = 400,
-                logoutPhase1 = 800,
-                $login = $(".login"),
-                $app = $(".app");
+            submitPhase1 = 1100,
+            submitPhase2 = 400,
+            logoutPhase1 = 800,
+            $login = $(".login"),
+            $app = $(".app");
 
         function ripple(elem, e) {
             $(".ripple").remove();
             var elTop = elem.offset().top,
-                    elLeft = elem.offset().left,
-                    x = e.pageX - elLeft,
-                    y = e.pageY - elTop;
+                elLeft = elem.offset().left,
+                x = e.pageX - elLeft,
+                y = e.pageY - elTop;
             var $ripple = $("<div class='ripple'></div>");
             $ripple.css({top: y, left: x});
             elem.append($ripple);
-        };
+        }
 
         $(document).on("click", ".login__submit", function(e) {
             if (animating) return;
@@ -79,20 +80,23 @@
             ripple($(that), e);
             $(that).addClass("processing");
             setTimeout(function() {
-                $(that).addClass("success");
-                setTimeout(function() {
-                    $app.show();
-                    $app.css("top");
-                    $app.addClass("active");
-                }, submitPhase2 - 70);
-                setTimeout(function() {
-                    $login.hide();
-                    $login.addClass("inactive");
-                    animating = false;
-                    $(that).removeClass("success processing");
-                    $('#loginForm').trigger('submit');
-                }, submitPhase2);
+                $('#loginForm').trigger('submit');
             }, submitPhase1);
+
+            // setTimeout(function() {
+            //     $(that).addClass("success");
+            //     setTimeout(function() {
+            //         $app.show();
+            //         $app.css("top");
+            //         $app.addClass("active");
+            //     }, submitPhase2 - 70);
+            //     setTimeout(function() {
+            //         $login.hide();
+            //         $login.addClass("inactive");
+            //         animating = false;
+            //         $(that).removeClass("success processing");
+            //     }, submitPhase2);
+            // }, submitPhase1);
         });
 
         $(document).on("click", ".app__logout", function(e) {

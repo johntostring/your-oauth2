@@ -17,8 +17,12 @@ public class UserApi {
         return authentication.getPrincipal();
     }
 
-    @GetMapping("/ping")
+    @GetMapping("/oapi/ping")
     public String ping() {
         return "pang";
+    }
+    @GetMapping("/api/test")
+    public Object test(Authentication authentication) {
+        return authentication.getPrincipal();
     }
 }

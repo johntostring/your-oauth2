@@ -33,6 +33,12 @@ svg {
     stroke-width: 1;
 }
 
+.login-alert {
+    padding: 10px 5px;
+    text-align: left;
+    color: #FC3768;
+}
+
 input, button {
     outline: none;
     border: none;

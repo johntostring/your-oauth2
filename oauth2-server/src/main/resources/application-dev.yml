@@ -9,6 +9,7 @@ security:
   ignored:
     - "/assets/**"
     - "*.js"
+    - "favicon.ico"
   oauth2:
     authorization:
       check-token-access: isAuthenticated()
@@ -58,3 +59,7 @@ your-oauth2:
     cubjjgwCikEUD4oRnk4jnNy5KQjt5eFcudjEhmNnwJqLcUuwj2DRRN61ovsfCc3q
     hwIDAQAB
     -----END PUBLIC KEY-----
+
+logging:
+  level:
+    org.springframework.security: debug
