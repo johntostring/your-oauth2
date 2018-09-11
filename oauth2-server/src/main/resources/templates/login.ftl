@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>统一认证系统</title>
+    <title>登录 - 统一认证系统</title>
     <link rel="shortcut icon" href="favicon.ico">
     <link type="text/css" href="/assets/css/login.css" rel="stylesheet">
 </head>
@@ -49,8 +49,6 @@
             </div>
         </div>
     </div>
-</div>
-<div class="container">
 </div>
 <script src="/assets/js/jquery-1.12.1.min.js"></script>
 <script type="text/javascript">

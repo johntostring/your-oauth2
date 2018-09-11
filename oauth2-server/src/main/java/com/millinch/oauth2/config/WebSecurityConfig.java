@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //            .ignoringAntMatchers("/logout/**")
 //        .and()
             .formLogin().loginPage("/login").permitAll()
-        .and().logout()
+        .and().logout().logoutSuccessUrl("/")
         .and()
             .requestMatchers()
                 .antMatchers("/api/**")
